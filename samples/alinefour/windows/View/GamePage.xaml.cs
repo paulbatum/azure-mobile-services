@@ -1,7 +1,11 @@
-﻿using System;
+﻿using alinefour.Model;
+using Microsoft.WindowsAzure.MobileServices;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Popups;
@@ -22,6 +26,9 @@ namespace alinefour.View
     /// </summary>
     public sealed partial class GamePage : Page
     {
+        private Game currentGame = null;
+        private IMobileServiceTable<Game> gameTable = App.MobileService.GetTable<Game>();
+
         public GamePage()
         {
             this.InitializeComponent();
@@ -47,25 +54,21 @@ namespace alinefour.View
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            board.Moved += board_Moved;
+            currentGame = (Game)e.Parameter;
 
-            board.Render(new List<List<int>>{
-                new List<int>{1, 0, 0, 0, 0, 0},
-                new List<int>{1, 2, 0, 0, 0, 0},
-                new List<int>{1, 2, 0, 0, 0, 0},
-                new List<int>{1, 0, 0, 0, 0, 0},
-                new List<int>{0, 0, 0, 0, 0, 0},
-                new List<int>{0, 0, 0, 0, 0, 0},
-                new List<int>{0, 0, 0, 0, 0, 0},
-            });
+            JsonSerializer ser = new JsonSerializer();
+            List<List<int>> result = (List<List<int>>)ser.Deserialize(new JsonTextReader(new StringReader(currentGame.State)), 
+                typeof(List<List<int>>));
+
+            board.Moved += board_Moved;
+           
+            board.Render(result);
         }
 
         async void board_Moved(object sender, GameBoardEventArgs e)
         {
-            MessageDialog m = new MessageDialog(
-                String.Format("Row {0}, column {1}", e.MoveRow, e.MoveColumn),
-                "The player made a move");
-            await m.ShowAsync();
+            currentGame.Move = (int)e.MoveColumn;
+            await gameTable.UpdateAsync(currentGame);
 
         }
     }

@@ -18,22 +18,19 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using alinefour.Model;
 
-namespace alinefour
+namespace alinefour.View
 {
     public sealed partial class MainPage : Page
     {
         private IMobileServiceTable<Game> gameTable = App.MobileService.GetTable<Game>();
         private IMobileServiceTable<Player> playerTable = App.MobileService.GetTable<Player>();
-
-        private Game currentGame = null;
-
+ 
         public MainPage()
         {
             this.InitializeComponent();
         }
 
-        
-
+       
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             await Authenticate();
@@ -108,32 +105,17 @@ namespace alinefour
         {
             List<Game> openGames = await gameTable.Where(g => g.Player2 == null)
                          .ToListAsync();
-
-
+            List<Game> myGames = await gameTable.Where(g => g.Player1 == App.MobileService.CurrentUser.UserId ||
+                g.Player2 == App.MobileService.CurrentUser.UserId).ToListAsync();
             ListItems.DataContext = openGames;
+            MyListItems.DataContext = myGames;
         }
 
-        private void RefreshGameView()
-        {
-            if (currentGame != null)
-            {
-                TextBoxGameState.Text = currentGame.State;
-
-            }
-        }
-
-        private async void ButtonRefresh_Click(object sender, RoutedEventArgs e)
-        {
-            await RefreshGames();
-            RefreshGameView();
-        }
-
-        private async void ButtonJoin_OnClick(object sender, RoutedEventArgs e)
+    
+        private void ButtonJoin_OnClick(object sender, RoutedEventArgs e)
         {
             var cb = (Button)sender;
-            currentGame = cb.DataContext as Game;            
-            await gameTable.UpdateAsync(currentGame);
-            await RefreshGames();
+            this.Frame.Navigate(typeof(GamePage), cb.DataContext as Game);
         }
 
         private async void ButtonCreate_OnClick(object sender, RoutedEventArgs e)
@@ -142,11 +124,5 @@ namespace alinefour
             await RefreshGames();
         }
 
-        private async void ButtonMove_OnClick(object sender, RoutedEventArgs e)
-        {
-            currentGame.Move = (int) MoveSlider.Value;
-            await gameTable.UpdateAsync(currentGame);
-            await RefreshGames();
-        }
     }
 }

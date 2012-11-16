@@ -4,5 +4,6 @@ obj/
 *.user
 *.suo
 AppPackages/
+packages/
 *.StoreAssociation.xml
 *.pfx
