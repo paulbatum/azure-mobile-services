@@ -19,6 +19,9 @@ namespace alinefour.Model
         [DataMember(Name = "player2")]
         public string Player2 { get; set; }
 
+        [DataMember(Name = "activePlayer")]
+        public int ActivePlayer { get; set; }
+
         [DataMember(Name = "state")]
         public string State { get; set; }
 
