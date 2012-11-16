@@ -69,7 +69,6 @@ namespace alinefour.View
         {
             currentGame.Move = (int)e.MoveColumn;
             await gameTable.UpdateAsync(currentGame);
-
         }
     }
 }
