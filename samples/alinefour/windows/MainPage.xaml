@@ -28,38 +28,27 @@
             </Grid>
 
 
-            <Grid Grid.Row="1">
-                <StackPanel>
-
-                    <local:Task Number="1" Title="Insert a TodoItem" Description="Enter some text below and click Save to insert a new todo item into your database" />
-
-                    <StackPanel Orientation="Horizontal" Margin="72,0,0,0">
-                        <TextBox Name="TextInput" Margin="5" MinWidth="300"></TextBox>
-                        <Button Name="ButtonSave" Click="ButtonSave_Click">Save</Button>
-                    </StackPanel>
-
-                </StackPanel>
-            </Grid>
+            <ListView Name="ListItems" ItemsSource="{Binding}" Margin="62,10,0,0" Grid.Row="1" Grid.Column="0">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="Open Game"></TextBlock>
+                            <TextBlock Text="{Binding Player1}"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
             <Grid Grid.Row="1" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <StackPanel>
-                    <local:Task Number="2" Title="Query and Update Data" Description="Click refresh below to load the unfinished TodoItems from your database. Use the checkbox to complete and update your TodoItems" />
+                <StackPanel>                   
                     <Button Margin="72,0,0,0" Name="ButtonRefresh" Click="ButtonRefresh_Click">Refresh</Button>
                 </StackPanel>
 
-                <ListView Name="ListItems" Margin="62,10,0,0" Grid.Row="1">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <CheckBox Name="CheckBoxComplete" IsChecked="{Binding Complete, Mode=TwoWay}" Checked="CheckBoxComplete_Checked" Content="{Binding Text}" Margin="10,5" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                
 
             </Grid>
 
