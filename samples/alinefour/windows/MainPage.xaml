@@ -34,6 +34,7 @@
                         <StackPanel>
                             <TextBlock Text="Open Game"></TextBlock>
                             <TextBlock Text="{Binding Player1}"></TextBlock>
+                            <Button Name="ButtonJoin" Click="ButtonJoin_OnClick">Join</Button>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -46,6 +47,7 @@
                 </Grid.RowDefinitions>
                 <StackPanel>                   
                     <Button Margin="72,0,0,0" Name="ButtonRefresh" Click="ButtonRefresh_Click">Refresh</Button>
+                    <Button Margin="72,0,0,0" Name="ButtonCreate" Click="ButtonCreate_OnClick">Create</Button>
                 </StackPanel>
 
                 

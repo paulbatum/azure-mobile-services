@@ -115,5 +115,19 @@ namespace alinefour
         {
             await RefreshGames();
         }
+
+        private async void ButtonJoin_OnClick(object sender, RoutedEventArgs e)
+        {
+            var cb = (Button)sender;
+            var game = cb.DataContext as Game;
+            await gameTable.UpdateAsync(game);
+            await RefreshGames();
+        }
+
+        private async void ButtonCreate_OnClick(object sender, RoutedEventArgs e)
+        {
+            await gameTable.InsertAsync(new Game());
+            await RefreshGames();
+        }
     }
 }
