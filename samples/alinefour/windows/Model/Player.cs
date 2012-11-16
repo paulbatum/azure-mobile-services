@@ -11,6 +11,9 @@ namespace alinefour.Model
         [DataMember(Name = "userId")]
         public string UserId { get; set; }
 
+        [DataMember(Name = "nickname")]
+        public string Nickname { get; set; }
+
         [DataMember(Name = "wnsChannel")]
         public string WnsChannel { get; set; }
     }

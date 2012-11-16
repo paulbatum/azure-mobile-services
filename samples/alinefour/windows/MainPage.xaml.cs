@@ -7,6 +7,7 @@ using Microsoft.Live;
 using Microsoft.WindowsAzure.MobileServices;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Networking.PushNotifications;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -52,7 +53,7 @@ namespace alinefour
                 {
                     session = result.Session;                    
                     await App.MobileService.LoginAsync(result.Session.AuthenticationToken);
-
+                    await CheckRegistration();
 
                     //var client = new LiveConnectClient(result.Session);
                     //LiveOperationResult meResult = await client.GetAsync("me");
@@ -74,9 +75,31 @@ namespace alinefour
 
         }
 
+        private async Task<string> GetName()
+        {
+            var client = new LiveConnectClient(session);
+            LiveOperationResult meResult = await client.GetAsync("me");
+            return meResult.Result["first_name"].ToString();            
+        }
+
         private async Task CheckRegistration()
         {
-            
+            var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
+            var player = (await playerTable.ToListAsync()).SingleOrDefault();
+            if (player == null)
+            {
+                var name = await GetName();                
+                player = new Player {
+                    Nickname = name,
+                    WnsChannel = channel.Uri
+                };
+                await playerTable.InsertAsync(player);
+            }
+            else
+            {
+                player.WnsChannel = channel.Uri;
+                await playerTable.UpdateAsync(player);
+            }
         }
 
         private async Task RefreshGames()
