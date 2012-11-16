@@ -34,7 +34,7 @@ namespace alinefour.View
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             await Authenticate();
-            await RefreshGames();
+            await Refresh();
         }
 
         private LiveConnectSession session;
@@ -101,13 +101,14 @@ namespace alinefour.View
             }
         }
 
-        private async Task RefreshGames()
+        private async Task Refresh()
         {
             List<Game> openGames = await gameTable.Where(g => g.Player2 == null)
                          .ToListAsync();
             List<Game> myGames = await gameTable.Where(g => g.Player1 == App.MobileService.CurrentUser.UserId ||
                 g.Player2 == App.MobileService.CurrentUser.UserId).ToListAsync();
             ListItems.DataContext = openGames;
+<<<<<<< HEAD:samples/alinefour/windows/View/MainPage.xaml.cs
             MyListItems.DataContext = myGames;
         }
 
@@ -116,13 +117,42 @@ namespace alinefour.View
         {
             var cb = (Button)sender;
             this.Frame.Navigate(typeof(GamePage), cb.DataContext as Game);
+=======
+            
+            if (currentGame != null)
+            {
+                TextBoxGameState.Text = currentGame.State;
+            }
+        }
+
+        private async void ButtonRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            await Refresh();            
+        }
+
+        private async void ButtonJoin_OnClick(object sender, RoutedEventArgs e)
+        {
+            var cb = (Button)sender;
+            currentGame = cb.DataContext as Game;            
+            await gameTable.UpdateAsync(currentGame);
+            await Refresh();
+>>>>>>> 723ee026640690b853a997f69337f4d3b7a6a8c6:samples/alinefour/windows/MainPage.xaml.cs
         }
 
         private async void ButtonCreate_OnClick(object sender, RoutedEventArgs e)
         {
             await gameTable.InsertAsync(new Game());
-            await RefreshGames();
+            await Refresh();
         }
 
+<<<<<<< HEAD:samples/alinefour/windows/View/MainPage.xaml.cs
+=======
+        private async void ButtonMove_OnClick(object sender, RoutedEventArgs e)
+        {
+            currentGame.Move = (int) MoveSlider.Value;
+            await gameTable.UpdateAsync(currentGame);
+            await Refresh();
+        }
+>>>>>>> 723ee026640690b853a997f69337f4d3b7a6a8c6:samples/alinefour/windows/MainPage.xaml.cs
     }
 }
