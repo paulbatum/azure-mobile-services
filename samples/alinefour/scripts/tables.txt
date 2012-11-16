@@ -1,0 +1,12 @@
+games:
+	insert - authenticated
+	update - authenticated
+	delete - admins
+	read - authenticated
+
+players:
+	insert - authenticated
+	update - authenticated
+	delete - admins
+	read - authenticated
+	
