@@ -46,8 +46,13 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <StackPanel>                   
-                    <Button Margin="72,0,0,0" Name="ButtonRefresh" Click="ButtonRefresh_Click">Refresh</Button>
-                    <Button Margin="72,0,0,0" Name="ButtonCreate" Click="ButtonCreate_OnClick">Create</Button>
+                    <Button  Name="ButtonRefresh" Click="ButtonRefresh_Click">Refresh</Button>
+                    <Button Name="ButtonCreate" Click="ButtonCreate_OnClick">Create</Button>
+                    
+                    
+                    <Slider Name="MoveSlider" Minimum="0" Maximum ="6"></Slider>  
+                    <Button Name="ButtonMove" Click="ButtonMove_OnClick">Move</Button>
+                    <TextBox Name="TextBoxGameState" Height="400"></TextBox>
                 </StackPanel>
 
                 

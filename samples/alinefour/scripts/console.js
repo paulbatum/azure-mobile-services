@@ -40,20 +40,15 @@ function prompt(game, activePlayer) {
 }
 
 function newBoard() {
-	var game = [];
-	var rows = 6;
-	var columns = 7;
-	var c;
-
-	for(c = 0; c < columns; c++) {
-		var col = [];
-		for(r = 0; r < rows; r++) {
-			col.push(0);
-		}
-		game.push(col);
-	}
-
-	return game;
+	return [
+		[0,0,0,0,0,0],
+		[0,0,0,0,0,0],
+		[0,0,0,0,0,0],
+		[0,0,0,0,0,0],
+		[0,0,0,0,0,0],
+		[0,0,0,0,0,0],
+		[0,0,0,0,0,0]
+	];
 }
 
 function exampleBoard() {

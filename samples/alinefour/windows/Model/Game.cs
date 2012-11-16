@@ -6,6 +6,11 @@ namespace alinefour.Model
     [DataTable(Name = "games")]
     public class Game
     {
+        public Game()
+        {
+            Move = -1;
+        }
+
         public int Id { get; set; }
 
         [DataMember(Name = "player1")]
@@ -16,5 +21,8 @@ namespace alinefour.Model
 
         [DataMember(Name = "state")]
         public string State { get; set; }
+
+        [DataMember(Name = "move")]
+        public int Move { get; set; }
     }
 }

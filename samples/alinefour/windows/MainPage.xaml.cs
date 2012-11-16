@@ -23,7 +23,9 @@ namespace alinefour
     public sealed partial class MainPage : Page
     {
         private IMobileServiceTable<Game> gameTable = App.MobileService.GetTable<Game>();
-        private IMobileServiceTable<Player> playerTable = App.MobileService.GetTable<Player>(); 
+        private IMobileServiceTable<Player> playerTable = App.MobileService.GetTable<Player>();
+
+        private Game currentGame = null;
 
         public MainPage()
         {
@@ -111,22 +113,39 @@ namespace alinefour
             ListItems.DataContext = openGames;
         }
 
+        private void RefreshGameView()
+        {
+            if (currentGame != null)
+            {
+                TextBoxGameState.Text = currentGame.State;
+
+            }
+        }
+
         private async void ButtonRefresh_Click(object sender, RoutedEventArgs e)
         {
             await RefreshGames();
+            RefreshGameView();
         }
 
         private async void ButtonJoin_OnClick(object sender, RoutedEventArgs e)
         {
             var cb = (Button)sender;
-            var game = cb.DataContext as Game;
-            await gameTable.UpdateAsync(game);
+            currentGame = cb.DataContext as Game;            
+            await gameTable.UpdateAsync(currentGame);
             await RefreshGames();
         }
 
         private async void ButtonCreate_OnClick(object sender, RoutedEventArgs e)
         {
             await gameTable.InsertAsync(new Game());
+            await RefreshGames();
+        }
+
+        private async void ButtonMove_OnClick(object sender, RoutedEventArgs e)
+        {
+            currentGame.Move = (int) MoveSlider.Value;
+            await gameTable.UpdateAsync(currentGame);
             await RefreshGames();
         }
     }
