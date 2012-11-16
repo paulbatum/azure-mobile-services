@@ -1,0 +1,174 @@
+﻿<UserControl
+    x:Class="alinefour.GameBoard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:alinefour"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <Style x:Name="Player1" TargetType="Ellipse">
+            <Setter Property="Fill" Value="Red" />
+        </Style>
+        <Style x:Name="Player2" TargetType="Ellipse">
+            <Setter Property="Fill" Value="Yellow" />
+        </Style>
+        <Style x:Name="Clear" TargetType="Ellipse">
+            <Setter Property="Fill" Value="Transparent" />
+        </Style>
+        <Style TargetType="Border">
+            <Setter Property="BorderBrush" Value="Gray" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid Name="grid" >
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="0" Grid.Column="0">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="1" Grid.Column="0">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="2" Grid.Column="0">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="3" Grid.Column="0">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="4" Grid.Column="0">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="5" Grid.Column="0">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="0" Grid.Column="1">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="1" Grid.Column="1">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="2" Grid.Column="1">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="3" Grid.Column="1">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="4" Grid.Column="1">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="5" Grid.Column="1">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="0" Grid.Column="2">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="1" Grid.Column="2">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="2" Grid.Column="2">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="3" Grid.Column="2">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="4" Grid.Column="2">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="5" Grid.Column="2">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="0" Grid.Column="3">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="1" Grid.Column="3">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="2" Grid.Column="3">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="3" Grid.Column="3">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="4" Grid.Column="3">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="5" Grid.Column="3">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="0" Grid.Column="4">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="1" Grid.Column="4">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="2" Grid.Column="4">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="3" Grid.Column="4">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="4" Grid.Column="4">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="5" Grid.Column="4">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="0" Grid.Column="5">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="1" Grid.Column="5">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="2" Grid.Column="5">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="3" Grid.Column="5">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="4" Grid.Column="5">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="5" Grid.Column="5">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="0" Grid.Column="6">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="1" Grid.Column="6">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="2" Grid.Column="6">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="3" Grid.Column="6">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="4" Grid.Column="6">
+            <Ellipse />
+        </Border>
+        <Border Grid.Row="5" Grid.Column="6">
+            <Ellipse />
+        </Border>
+    </Grid>
+
+</UserControl>
