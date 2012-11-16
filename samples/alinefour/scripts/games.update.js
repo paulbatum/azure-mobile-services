@@ -47,15 +47,15 @@ function update(item, user, request) {
             return;
         }
 
-        var inactiveId = gameRow.activePlayer == 1 ? game.Player2 : game.Player1;
-        
+        var inactiveId = gameRow.activePlayer == 1 ? gameRow.player2 : gameRow.player1;
+                
         game.makeMove(item.move, gameRow.activePlayer);
+        gameRow.move = item.move;
         gameRow.state = game.toJson();
 
         var winResult = game.checkForWinner();
         if(winResult) {
-            gameRow.result = gameRow.activePlayer == 1 ? "Player 1 wins" : "Player 2 wins";
-            
+            gameRow.result = gameRow.activePlayer == 1 ? "Player 1 wins" : "Player 2 wins";            
             gameRow.activePlayer = 0;
             gameTable.update(gameRow, {
                 success: function() {
@@ -63,7 +63,7 @@ function update(item, user, request) {
                     notifyLoser(inactiveId);
                 } 
             });
-        } else if (game.checkForDraw) {
+        } else if (game.checkForDraw()) {
             gameRow.result = "Draw";
             gameRow.activePlayer = 0;
             gameTable.update(gameRow, {
@@ -73,11 +73,11 @@ function update(item, user, request) {
                 } 
             });            
         } else {
-            gameRow.activePlayer = (game.activePlayer % 2) + 1;
+            gameRow.activePlayer = (gameRow.activePlayer % 2) + 1;
             gameTable.update(gameRow, {
                 success: function() {
                     request.respond(200, gameRow);
-                    notifyTurn(getActivePlayerId(gameRow));
+                    notifyTurn(inactiveId);
                 } 
             });
         }
@@ -106,6 +106,9 @@ function update(item, user, request) {
             userId: userId
         }).read({
             success: function(results) {
+                if(results.length === 0) {
+                    console.error("unable to find player with userId:", userId, message);
+                }
                 var channel = results[0].wnsChannel;
                 push.wns.sendToastText02(channel, {
                     text1: "alinefour",

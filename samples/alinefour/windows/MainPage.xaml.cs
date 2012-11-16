@@ -37,7 +37,7 @@ namespace alinefour
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             await Authenticate();
-            await RefreshGames();
+            await Refresh();
         }
 
         private LiveConnectSession session;
@@ -104,28 +104,23 @@ namespace alinefour
             }
         }
 
-        private async Task RefreshGames()
+        private async Task Refresh()
         {
             List<Game> openGames = await gameTable.Where(g => g.Player2 == null)
                          .ToListAsync();
 
 
             ListItems.DataContext = openGames;
-        }
-
-        private void RefreshGameView()
-        {
+            
             if (currentGame != null)
             {
                 TextBoxGameState.Text = currentGame.State;
-
             }
         }
 
         private async void ButtonRefresh_Click(object sender, RoutedEventArgs e)
         {
-            await RefreshGames();
-            RefreshGameView();
+            await Refresh();            
         }
 
         private async void ButtonJoin_OnClick(object sender, RoutedEventArgs e)
@@ -133,20 +128,20 @@ namespace alinefour
             var cb = (Button)sender;
             currentGame = cb.DataContext as Game;            
             await gameTable.UpdateAsync(currentGame);
-            await RefreshGames();
+            await Refresh();
         }
 
         private async void ButtonCreate_OnClick(object sender, RoutedEventArgs e)
         {
             await gameTable.InsertAsync(new Game());
-            await RefreshGames();
+            await Refresh();
         }
 
         private async void ButtonMove_OnClick(object sender, RoutedEventArgs e)
         {
             currentGame.Move = (int) MoveSlider.Value;
             await gameTable.UpdateAsync(currentGame);
-            await RefreshGames();
+            await Refresh();
         }
     }
 }
