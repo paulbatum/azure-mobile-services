@@ -4,17 +4,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using Windows.Data.Json;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -32,6 +24,7 @@ namespace alinefour.View
         public GamePage()
         {
             this.InitializeComponent();
+            board.Moved += board_Moved;
         }
 
         /// <summary>
@@ -55,20 +48,31 @@ namespace alinefour.View
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             currentGame = (Game)e.Parameter;
+            RenderGame(currentGame);
+        }
 
+        private void RenderGame(Game g){
             JsonSerializer ser = new JsonSerializer();
-            List<List<int>> result = (List<List<int>>)ser.Deserialize(new JsonTextReader(new StringReader(currentGame.State)), 
+            List<List<int>> result = (List<List<int>>)ser.Deserialize(new JsonTextReader(new StringReader(g.State)), 
                 typeof(List<List<int>>));
-
-            board.Moved += board_Moved;
-           
             board.Render(result);
         }
 
         async void board_Moved(object sender, GameBoardEventArgs e)
         {
-            currentGame.Move = (int)e.MoveColumn;
-            await gameTable.UpdateAsync(currentGame);
+            if (currentGame.IsGameInProgress && currentGame.IsCurrentUsersTurn)
+            {
+                currentGame.Move = (int)e.MoveColumn;
+                await gameTable.UpdateAsync(currentGame);
+                List<Game> updatedGame = await gameTable.Where(g => g.Id == currentGame.Id).ToListAsync();
+                RenderGame(updatedGame[0]);
+            }
+            else
+            {
+                MessageDialog message = new MessageDialog("The game has finished, or it is not your turn to play",
+                    "You can't make a move");
+                await message.ShowAsync();
+            }
         }
     }
 }

@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using alinefour.Model;
 using Microsoft.Live;
 using Microsoft.WindowsAzure.MobileServices;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Windows.Networking.PushNotifications;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using alinefour.Model;
 
 namespace alinefour.View
 {
@@ -29,7 +22,6 @@ namespace alinefour.View
         {
             this.InitializeComponent();
         }
-
        
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -103,20 +95,32 @@ namespace alinefour.View
 
         private async Task Refresh()
         {
-            List<Game> openGames = await gameTable.Where(g => g.Player2 == null)
-                         .ToListAsync();
-            List<Game> myGames = await gameTable.Where(g => g.Player1 == App.MobileService.CurrentUser.UserId ||
-                g.Player2 == App.MobileService.CurrentUser.UserId).ToListAsync();
-            ListItems.DataContext = openGames;
-            MyListItems.DataContext = myGames;
+            List<Game> openGames = 
+                await gameTable.Where(g => g.Player2 == null)
+                .ToListAsync();
+            List<Game> myGames =
+                await gameTable.Where(g => ((g.Player1 != null && g.Player2 != null) &&
+                    (g.Player1 == App.MobileService.CurrentUser.UserId ||
+                    g.Player2 == App.MobileService.CurrentUser.UserId))).ToListAsync();
+            openGamesList.DataContext = openGames;
+            myGamesList.DataContext = myGames;
         }
 
-    
-        private void ButtonJoin_OnClick(object sender, RoutedEventArgs e)
-        {
-            var cb = (Button)sender;
-            this.Frame.Navigate(typeof(GamePage), cb.DataContext as Game);
 
+        private void PlayGame_OnTapped(object sender, RoutedEventArgs e)
+        {
+            var cb = (FrameworkElement)sender;
+            this.Frame.Navigate(typeof(GamePage), cb.DataContext as Game);
+        }
+
+        private async void JoinGame_OnTapped(object sender, RoutedEventArgs e)
+        {
+            var cb = (FrameworkElement)sender;
+
+            // Any update on an open game that the player hasn't previously
+            // udated is considered a join by the server
+            await gameTable.UpdateAsync(cb.DataContext as Game);
+            await Refresh();
         }
 
         private async void ButtonCreate_OnClick(object sender, RoutedEventArgs e)

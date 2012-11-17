@@ -107,6 +107,10 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Game.cs" />
+    <Compile Include="View\GameResultConverterToVisibility.cs" />
+    <Compile Include="View\GameResultConverterToText.cs" />
+    <Compile Include="View\GameNameConverter.cs" />
+    <Compile Include="View\GameTurnConverter.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

@@ -4,58 +4,109 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:alinefour"
+    xmlns:view="using:alinefour.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.Resources>
+        <Style TargetType="ListView">
+            <Setter Property="SelectionMode" Value="None" />
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        </Style>
+        <Style TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        </Style>
+        <Style x:Key="verticalCentered" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style BasedOn="{StaticResource TextButtonStyle}" TargetType="Button">
+            
+        </Style>
+        <view:GameNameConverter x:Key="gameNameConverter" />
+        <view:GameTurnConverter x:Key="gameTurnConverter" />
+        <view:GameResultConverterToText x:Key="gameResultConverterToText" />
+        <view:GameResultConverterToVisibility x:Key="gameResultConverterToVisibility" />
 
-    <Grid Background="White">
+    </Page.Resources>
 
-        <Grid Margin="50,50,10,10">
+    <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="*" />           
+        </Grid.RowDefinitions>
+
+        <!-- Back button and page title -->
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="110"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="ms-appx:///Assets/StoreLogo.png" Width="50" Margin="0, 25, 0, 0" />
+            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="alinefour" Style="{StaticResource PageHeaderTextStyle}"/>
+        </Grid>
+
+
+        <Grid Grid.Row="1" Margin="110">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"  />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-            <Grid Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,0,20">
-                <StackPanel>
-                    <TextBlock Foreground="#0094ff" FontFamily="Segoe UI Light" Margin="0,0,0,6">WINDOWS AZURE MOBILE SERVICES</TextBlock>
-                    <TextBlock Foreground="Gray" FontFamily="Segoe UI Light" FontSize="45" >alinefour</TextBlock>
-                </StackPanel>
-            </Grid>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="open games" Style="{StaticResource SubheaderTextStyle}"
+                       Margin="0, 0, 10, 0"/>
 
-
-            <ListView Name="ListItems" ItemsSource="{Binding}" Margin="62,10,0,0" Grid.Row="1" Grid.Column="0">
+            <ListView Name="openGamesList" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding}" Margin="0, 0, 10, 0">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="Open Game"></TextBlock>
-                            <TextBlock Text="{Binding Player1}"></TextBlock>
-                            <Button Name="ButtonJoin" Click="ButtonJoin_OnClick">Join</Button>
-                        </StackPanel>
+                        <TextBlock Text="{Binding Converter={StaticResource gameNameConverter}}" 
+                                   Style="{StaticResource verticalCentered}" Tapped="JoinGame_OnTapped" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="my games" Style="{StaticResource SubheaderTextStyle}"
+                       Margin="10, 0, 0, 0"/>
+
+            <ListView Name="myGamesList" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding}" Margin="10, 0, 0, 0">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Tapped="PlayGame_OnTapped">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Column="1" Margin="20, 0, 0, 0"
+                                       Text="{Binding Converter={StaticResource gameNameConverter}}" 
+                                       Style="{StaticResource verticalCentered}" />
+                            <Ellipse Grid.Column="0" Fill="Red" 
+                                     Visibility="{Binding Converter={StaticResource gameTurnConverter}}" />
+                            <TextBlock Grid.Column="0" Style="{StaticResource verticalCentered}"
+                                       Foreground="White" HorizontalAlignment="Center"
+                                       Visibility="{Binding Converter={StaticResource gameTurnConverter}}">Your<LineBreak/>turn</TextBlock>
+                            <Ellipse Grid.Column="0" Fill="Gray"
+                                     Visibility="{Binding Converter={StaticResource gameResultConverterToVisibility}}" />
+                            <TextBlock Grid.Column="0" Style="{StaticResource verticalCentered}"
+                                       Foreground="White" HorizontalAlignment="Center"
+                                       Visibility="{Binding Converter={StaticResource gameResultConverterToVisibility}}" 
+                                       Text="{Binding Converter={StaticResource gameResultConverterToText}}"/>
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
 
 
-            <ListView Name="MyListItems" ItemsSource="{Binding}" Margin="62,10,0,0" Grid.Row="1" Grid.Column="1">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="My Game"></TextBlock>
-                            <TextBlock Text="{Binding Player1}"></TextBlock>
-                            <Button Name="ButtonJoin" Click="ButtonJoin_OnClick">Join</Button>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
-            <Button Name="ButtonCreate" Grid.Row="2" Grid.Column="0" Click="ButtonCreate_OnClick">Create</Button>
-
+            <Button Name="ButtonCreate" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
+                    Margin="0, 20, 0, 0" Style="{StaticResource TextButtonStyle}"
+                    Click="ButtonCreate_OnClick">start new game</Button>
         </Grid>
     </Grid>
 </Page>
