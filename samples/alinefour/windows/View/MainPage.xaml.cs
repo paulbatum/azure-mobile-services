@@ -94,14 +94,14 @@ namespace alinefour.View
         }
 
         private async Task Refresh()
-        {
-            List<Game> openGames = 
+        {            
+            List<Game> openGames =
                 await gameTable.Where(g => g.Player2 == null)
                 .ToListAsync();
             List<Game> myGames =
                 await gameTable.Where(g => ((g.Player1 != null && g.Player2 != null) &&
                     (g.Player1 == App.MobileService.CurrentUser.UserId ||
-                    g.Player2 == App.MobileService.CurrentUser.UserId))).ToListAsync();
+                    g.Player2 == App.MobileService.CurrentUser.UserId))).ToListAsync();            
             openGamesList.DataContext = openGames;
             myGamesList.DataContext = myGames;
         }

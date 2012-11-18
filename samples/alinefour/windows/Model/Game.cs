@@ -1,6 +1,9 @@
 ﻿using Microsoft.WindowsAzure.MobileServices;
 using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace alinefour.Model
 {
@@ -17,8 +20,14 @@ namespace alinefour.Model
         [DataMember(Name = "player1")]
         public string Player1 { get; set; }
 
+        [DataMember(Name = "player1Nickname")]
+        public string Player1Nickname { get; set; }
+
         [DataMember(Name = "player2")]
         public string Player2 { get; set; }
+
+        [DataMember(Name = "player2Nickname")]
+        public string Player2Nickname { get; set; }
 
         [DataMember(Name = "activePlayer")]
         public int ActivePlayer { get; set; }
@@ -37,7 +46,17 @@ namespace alinefour.Model
         {
             get
             {
-                return String.Format("Game {0} started by {1}", Id, Player1);
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat("Game {0} started by {1}", Id, Player1Nickname);
+                if (!String.IsNullOrEmpty(Player2))
+                {
+                    sb.AppendFormat(" against {0}", Player2Nickname);
+                }
+                else
+                {
+                    sb.Append(" and waiting for players");
+                }
+                return sb.ToString();
             }
         }
 
@@ -77,7 +96,6 @@ namespace alinefour.Model
             }
         }
 
-
-
+       
     }
 }

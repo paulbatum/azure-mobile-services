@@ -10,6 +10,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D1C244
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{27B8B2F7-AB0C-4562-B579-21BE43A4338E}"
+	ProjectSection(SolutionItems) = preProject
+		..\scripts\console.js = ..\scripts\console.js
+		..\scripts\game.js = ..\scripts\game.js
+		..\scripts\games.insert.js = ..\scripts\games.insert.js
+		games.read.js = games.read.js
+		..\scripts\games.update.js = ..\scripts\games.update.js
+		..\scripts\players.insert.js = ..\scripts\players.insert.js
+		..\scripts\players.read.js = ..\scripts\players.read.js
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
