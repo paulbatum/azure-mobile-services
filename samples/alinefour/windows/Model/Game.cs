@@ -60,14 +60,11 @@ namespace alinefour.Model
             }
         }
 
-        public bool IsCurrentUsersTurn
+        public bool IsUsersTurn(string userId)
         {
-            get
-            {
-                return (ActivePlayer == 1 && String.Equals(Player1, App.MobileService.CurrentUser.UserId) ||
-                    ActivePlayer == 2 && (String.Equals(Player2, App.MobileService.CurrentUser.UserId) ||
-                    String.IsNullOrEmpty(Player2)));
-            }
+            return (ActivePlayer == 1 && String.Equals(Player1, userId) ||
+             ActivePlayer == 2 && (String.Equals(Player2, userId) ||
+             String.IsNullOrEmpty(Player2)));
         }
 
         public bool IsGameInProgress
@@ -78,14 +75,11 @@ namespace alinefour.Model
             }
         }
 
-        public bool CurrentUserWon
+        public bool UserWon(string userId)
         {
-            get
-            {
-                return !String.IsNullOrEmpty(Result) && !IsGameInProgress &&
-                    ((Result.StartsWith("Player 1") && String.Equals(Player1, App.MobileService.CurrentUser.UserId)) ||
-                    (Result.StartsWith("Player 2") && String.Equals(Player2, App.MobileService.CurrentUser.UserId)));
-            }
+            return !String.IsNullOrEmpty(Result) && !IsGameInProgress &&
+                ((Result.StartsWith("Player 1") && String.Equals(Player1, userId)) ||
+                (Result.StartsWith("Player 2") && String.Equals(Player2, userId)));
         }
 
         public bool IsDraw

@@ -13,7 +13,8 @@ namespace alinefour.View
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return ((Game)value).IsCurrentUsersTurn ? Visibility.Visible : Visibility.Collapsed;
+            return ((Game)value).IsUsersTurn(App.MobileService.CurrentUser.UserId) ? 
+                Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

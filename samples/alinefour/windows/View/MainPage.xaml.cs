@@ -37,7 +37,7 @@ namespace alinefour.View
             while (session == null)
             {                
                 //if (liveIdClient.CanLogout)
-                //    liveIdClient.Logout();
+                //    liveIdClient.Logout();    
 
                 LiveLoginResult result = await liveIdClient.LoginAsync(new[] { "wl.basic" });
                 if (result.Status == LiveConnectSessionStatus.Connected)
