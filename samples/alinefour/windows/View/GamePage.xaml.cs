@@ -53,7 +53,8 @@ namespace alinefour.View
 
         private void RenderGame(Game g){
             JsonSerializer ser = new JsonSerializer();
-            List<List<int>> result = (List<List<int>>)ser.Deserialize(new JsonTextReader(new StringReader(g.State)), 
+            List<List<int>> result = (List<List<int>>)ser.Deserialize(
+                new JsonTextReader(new StringReader(g.State ?? String.Empty)), 
                 typeof(List<List<int>>));
             board.Render(result);
         }

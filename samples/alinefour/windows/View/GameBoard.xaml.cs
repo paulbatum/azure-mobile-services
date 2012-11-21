@@ -64,32 +64,34 @@ namespace alinefour
 
         public void Render(List<List<int>> board)
         {
-            for (int column = 0; column < board.Count; column++)
-            {
-                for (int row = 0; row < board[column].Count; row++)
+            if (board != null){
+                for (int column = 0; column < board.Count; column++)
                 {
-                    Border b = (Border)grid.Children
-                        .Where<UIElement>(c => Grid.GetRow((FrameworkElement)c) == row
-                            && Grid.GetColumn((FrameworkElement)c) == column)
-                        .FirstOrDefault();
-
-                    if (b != null)
+                    for (int row = 0; row < board[column].Count; row++)
                     {
-                        Ellipse e = (Ellipse)b.Child;
+                        Border b = (Border)grid.Children
+                            .Where<UIElement>(c => Grid.GetRow((FrameworkElement)c) == row
+                                && Grid.GetColumn((FrameworkElement)c) == column)
+                            .FirstOrDefault();
 
-                        if (e != null)
+                        if (b != null)
                         {
-                            switch (board[column][row])
+                            Ellipse e = (Ellipse)b.Child;
+
+                            if (e != null)
                             {
-                                case 1:
-                                    e.Style = (Style)this.Resources["Player1"];
-                                    break;
-                                case 2:
-                                    e.Style = (Style)this.Resources["Player2"];
-                                    break;
-                                default:
-                                    e.Style = (Style)this.Resources["Clear"];
-                                    break;
+                                switch (board[column][row])
+                                {
+                                    case 1:
+                                        e.Style = (Style)this.Resources["Player1"];
+                                        break;
+                                    case 2:
+                                        e.Style = (Style)this.Resources["Player2"];
+                                        break;
+                                    default:
+                                        e.Style = (Style)this.Resources["Clear"];
+                                        break;
+                                }
                             }
                         }
                     }
