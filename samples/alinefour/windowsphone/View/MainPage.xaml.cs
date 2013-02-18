@@ -50,13 +50,6 @@ namespace alinefour.View
             }
         }
 
-        private async Task<string> GetName()
-        {
-            var client = new LiveConnectClient(session);
-            LiveOperationResult meResult = await client.GetAsync("me");
-            return meResult.Result["first_name"].ToString();
-        }
-
         private async void CheckRegistration()
         {
             /// Holds the push channel that is created or found.
@@ -97,7 +90,10 @@ namespace alinefour.View
             var player = (await playerTable.ToListAsync()).SingleOrDefault();
             if (player == null)
             {
-                var name = await GetName();
+                var client = new LiveConnectClient(session);
+                LiveOperationResult meResult = await client.GetAsync("me");
+                var name = meResult.Result["first_name"].ToString();
+
                 player = new Player
                 {
                     Nickname = name,

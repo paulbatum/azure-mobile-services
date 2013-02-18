@@ -17,8 +17,7 @@ namespace alinefour.View
     public partial class GamePage : PhoneApplicationPage
     {
         private Game currentGame = null;
-        private IMobileServiceTable<Game> gameTable = App.MobileService.GetTable<Game>();
-
+       
         public GamePage()
         {
             InitializeComponent();
@@ -43,6 +42,8 @@ namespace alinefour.View
 
         async void board_Moved(object sender, GameBoardEventArgs e)
         {
+            IMobileServiceTable<Game> gameTable = App.MobileService.GetTable<Game>();
+
             if (currentGame.IsGameInProgress &&
                 currentGame.IsUsersTurn(App.CurrentUser))
             {
