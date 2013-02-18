@@ -40,7 +40,7 @@ namespace alinefour.View
 
                     Debug.WriteLine("Logged in {0} - {1}", meResult.Result["first_name"], loginResult.UserId);
 
-                    await CheckRegistration();
+                    CheckRegistration();
                 }
                 else
                 {
@@ -57,7 +57,7 @@ namespace alinefour.View
             return meResult.Result["first_name"].ToString();
         }
 
-        private async Task CheckRegistration()
+        private async void CheckRegistration()
         {
             /// Holds the push channel that is created or found.
             HttpNotificationChannel pushChannel;
