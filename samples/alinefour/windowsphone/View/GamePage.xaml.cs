@@ -44,7 +44,7 @@ namespace alinefour.View
         async void board_Moved(object sender, GameBoardEventArgs e)
         {
             if (currentGame.IsGameInProgress &&
-                currentGame.IsUsersTurn(App.MobileService.CurrentUser.UserId))
+                currentGame.IsUsersTurn(App.CurrentUser))
             {
                 currentGame.Move = (int)e.MoveColumn;
                 await gameTable.UpdateAsync(currentGame);

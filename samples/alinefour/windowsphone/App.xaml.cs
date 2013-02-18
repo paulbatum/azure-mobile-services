@@ -26,6 +26,10 @@ namespace alinefour
             MobileServiceConfig.ApplicationKey
         );
 
+        public static string CurrentUser
+        {
+            get { return MobileService.CurrentUser.UserId; }
+        }
 
         /// <summary>
         /// Constructor for the Application object.

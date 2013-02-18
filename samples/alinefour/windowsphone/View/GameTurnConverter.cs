@@ -14,7 +14,7 @@ namespace alinefour.View
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return ((Game)value).IsUsersTurn(App.MobileService.CurrentUser.UserId) ?
+            return ((Game)value).IsUsersTurn(App.CurrentUser) ?
                 Visibility.Visible : Visibility.Collapsed;
         }
 

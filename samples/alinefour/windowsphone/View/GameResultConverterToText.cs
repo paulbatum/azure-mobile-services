@@ -17,7 +17,7 @@ namespace alinefour.View
 
             if (!game.IsDraw)
             {
-                if (game.UserWon(App.MobileService.CurrentUser.UserId))
+                if (game.UserWon(App.CurrentUser))
                 {
                     result = "You" + Environment.NewLine + "win";
                 }
