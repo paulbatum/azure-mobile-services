@@ -109,9 +109,14 @@ function update(item, user, request) {
                 if(results.length === 0) {
                     console.error("unable to find player with userId:", userId, message);
                 }
-                var channel = results[0].wnsChannel;
-                push.wns.sendToastText02(channel, {
+                var wnsChannel = results[0].wnsChannel;
+                push.wns.sendToastText02(wnsChannel, {
                     text1: "alinefour",
+                    text2: message
+                });
+                var mpnsChannel = results[0].mpnsChannel;
+                push.mpns.sendToast(mpnsChannel, {
+                    text1: 'alinefour',
                     text2: message
                 });
             }

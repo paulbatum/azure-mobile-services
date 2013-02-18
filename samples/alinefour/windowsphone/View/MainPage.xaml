@@ -1,0 +1,94 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="alinefour.View.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:view="clr-namespace:alinefour.View"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="False">
+    <!--LayoutRoot contains the root grid where all other page content is placed-->
+    <Grid x:Name="LayoutRoot">
+        <Grid.Resources>
+            <Style TargetType="ListBox">
+                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+            </Style>
+            <Style TargetType="ListBoxItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            </Style>
+            <Style x:Key="verticalCentered" TargetType="TextBlock">
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+            <view:GameNameConverter x:Key="gameNameConverter" />
+            <view:GameTurnConverter x:Key="gameTurnConverter" />
+            <view:GameResultConverterToText x:Key="gameResultConverterToText" />
+            <view:GameResultConverterToVisibility x:Key="gameResultConverterToVisibility" />
+        </Grid.Resources>
+        <phone:Panorama Title="alinefour">
+
+            <!--Panorama item one-->
+            <phone:PanoramaItem Header="open games">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="100" />
+                    </Grid.RowDefinitions>
+                    <ListBox Name="openGamesList" ItemsSource="{Binding}" Grid.Row="0" Grid.Column="0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Height="60" Text="{Binding Converter={StaticResource gameNameConverter}}" 
+                                   Style="{StaticResource verticalCentered}" Tap="JoinGame_OnTapped" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button Grid.Column="0" Grid.Row="1" Content="start new game" Click="ButtonCreate_OnClick" />
+
+                </Grid>
+            </phone:PanoramaItem>
+
+            <!--Panorama item two-->
+            <phone:PanoramaItem Header="my games">
+                <ListBox Name="myGamesList" ItemsSource="{Binding}" >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Tap="PlayGame_OnTapped">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Column="1" Margin="20, 0, 0, 0"
+                                           Text="{Binding Converter={StaticResource gameNameConverter}}" 
+                                           Style="{StaticResource verticalCentered}" />
+                                <Ellipse Grid.Column="0" Fill="Red" 
+                                         Visibility="{Binding Converter={StaticResource gameTurnConverter}}" />
+                                <TextBlock Grid.Column="0" Style="{StaticResource verticalCentered}"
+                                           Foreground="White" HorizontalAlignment="Center"
+                                           Visibility="{Binding Converter={StaticResource gameTurnConverter}}">Your<LineBreak/>turn</TextBlock>
+                                <Ellipse Grid.Column="0" Fill="Gray"
+                                         Visibility="{Binding Converter={StaticResource gameResultConverterToVisibility}}" />
+                                <TextBlock Grid.Column="0" Style="{StaticResource verticalCentered}"
+                                           Foreground="White" HorizontalAlignment="Center"
+                                           Visibility="{Binding Converter={StaticResource gameResultConverterToVisibility}}" 
+                                           Text="{Binding Converter={StaticResource gameResultConverterToText}}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </phone:PanoramaItem>
+        </phone:Panorama>
+    </Grid>
+
+</phone:PhoneApplicationPage>
