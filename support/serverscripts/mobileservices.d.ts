@@ -85,9 +85,16 @@ interface User {
 }
 
 interface Push {
+    /** Provides access to APIs for sending push notifications to Windows Store applications via the Windows Push Notification Service. */
     wns: Wns;
+
+    /** Provides access to APIs for sending push notifications to Windows Phone applications via the Microsoft Push Notification Service. */
     mpns: Mpns;
+
+    /** Provides access to APIs for sending push notifications to iOS applications via the Apple Push Notification Service. */
     apns: Apns;
+
+    /** Provides access to APIs for sending push notifications to Android applications via Google Cloud Messaging. */
     gcm: Gcm;
 }
 
@@ -106,6 +113,7 @@ interface WnsToastCallbackOptions extends WnsCallbackOptions {
 }
 
 interface Wns {
+
     sendTileSquareBlock(channel: string, payload: { text1: string; text2: string; }, options: WnsCallbackOptions): void;
     sendTileSquareText01(channel: string, payload: { text1: string; text2: string; text3: string; text4: string; }, options: WnsCallbackOptions): void;
     sendTileWideText01(channel: string, payload: { text1: string; text2: string; text3: string; text4: string; text5: string; }, options: WnsCallbackOptions): void;
@@ -114,11 +122,11 @@ interface Wns {
     sendToastText01(channel: string, payload: { text1: string; }, options: WnsToastCallbackOptions): void;
     sendToastImageAndText01(channel: string, payload: { text1: string; img1src: string; img1alt: string; }, options: WnsToastCallbackOptions): void;
 
-    sendBadge(channel: string, value: number, WnsCallbackOptions);
-    sendBadge(channel: string, value: string, WnsCallbackOptions);
+    sendBadge(channel: string, value: number, options: WnsCallbackOptions);
+    sendBadge(channel: string, value: string, options: WnsCallbackOptions);
 
     sendRaw(channel: string, value: string, options: WnsCallbackOptions);
-    send(channel: string, payload: string, type: string, WnsCallbackOptions);
+    send(channel: string, payload: string, type: string, options: WnsCallbackOptions);
 
     // TODO
 }
@@ -153,4 +161,8 @@ interface TableScript {
 // Globals
 declare var statusCodes: StatusCodes;
 declare var tables: Tables;
+
+/** Provides access to APIs for sending push notifications. */
 declare var push: Push;
+
+
