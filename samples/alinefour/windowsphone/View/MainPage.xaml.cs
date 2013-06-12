@@ -50,7 +50,7 @@ namespace alinefour.View
             }
         }
 
-        private async void CheckRegistration()
+        private void CheckRegistration()
         {
             /// Holds the push channel that is created or found.
             HttpNotificationChannel pushChannel;
@@ -83,11 +83,27 @@ namespace alinefour.View
                 pushChannel.ErrorOccurred += new EventHandler<NotificationChannelErrorEventArgs>(PushChannel_ErrorOccurred);
 
                 Debug.WriteLine(pushChannel.ChannelUri.ToString());
+                EnsureUserRegistration(pushChannel.ChannelUri);
 
             }
+        }
 
+        void PushChannel_ChannelUriUpdated(object sender, NotificationChannelUriEventArgs e)
+        {
+            Debug.WriteLine(e.ChannelUri.ToString());
+            EnsureUserRegistration(e.ChannelUri);
+        }
 
-            var player = (await playerTable.ToListAsync()).SingleOrDefault();
+        void PushChannel_ErrorOccurred(object sender, NotificationChannelErrorEventArgs e)
+        {
+            Debug.WriteLine("A push notification {0} error occurred.  {1} ({2}) {3}",
+                    e.ErrorType, e.Message, e.ErrorCode, e.ErrorAdditionalData);
+        }
+
+        private async void EnsureUserRegistration(Uri channel)
+        {
+            List<Player> players = await playerTable.ToListAsync();
+            var player = players.SingleOrDefault();
             if (player == null)
             {
                 var client = new LiveConnectClient(session);
@@ -97,26 +113,15 @@ namespace alinefour.View
                 player = new Player
                 {
                     Nickname = name,
-                    MpnsChannel = pushChannel.ChannelUri.ToString()
+                    MpnsChannel = channel.ToString()
                 };
                 await playerTable.InsertAsync(player);
             }
             else
             {
-                player.MpnsChannel = pushChannel.ChannelUri.ToString();
+                player.MpnsChannel = channel.ToString();
                 await playerTable.UpdateAsync(player);
             }
-        }
-
-        void PushChannel_ChannelUriUpdated(object sender, NotificationChannelUriEventArgs e)
-        {
-            Debug.WriteLine(e.ChannelUri.ToString());
-        }
-
-        void PushChannel_ErrorOccurred(object sender, NotificationChannelErrorEventArgs e)
-        {
-            Debug.WriteLine("A push notification {0} error occurred.  {1} ({2}) {3}",
-                    e.ErrorType, e.Message, e.ErrorCode, e.ErrorAdditionalData);
         }
 
         private async Task Refresh()
