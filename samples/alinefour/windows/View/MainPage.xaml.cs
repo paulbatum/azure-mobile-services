@@ -43,7 +43,7 @@ namespace alinefour.View
                 if (result.Status == LiveConnectSessionStatus.Connected)
                 {
                     session = result.Session;                    
-                    await App.MobileService.LoginAsync(result.Session.AuthenticationToken);
+                    await App.MobileService.LoginWithMicrosoftAccountAsync(result.Session.AuthenticationToken);
                     await CheckRegistration();
 
                     //var client = new LiveConnectClient(result.Session);

@@ -1,20 +1,21 @@
 ﻿using System.Runtime.Serialization;
 using Microsoft.WindowsAzure.MobileServices;
+using Newtonsoft.Json;
 
 namespace alinefour.Model
 {
-    [DataTable(Name = "players")]
+    [DataTable("players")]
     public class Player
     {
         public int Id { get; set; }
 
-        [DataMember(Name = "userId")]
+        [JsonProperty(PropertyName = "userId")]
         public string UserId { get; set; }
 
-        [DataMember(Name = "nickname")]
+        [JsonProperty(PropertyName = "nickname")]
         public string Nickname { get; set; }
 
-        [DataMember(Name = "wnsChannel")]
+        [JsonProperty(PropertyName = "wnsChannel")]
         public string WnsChannel { get; set; }
     }
 }
