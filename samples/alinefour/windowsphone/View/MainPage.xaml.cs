@@ -36,7 +36,7 @@ namespace alinefour.View
                     LiveConnectClient client = new LiveConnectClient(result.Session);
                     LiveOperationResult meResult = await client.GetAsync("me");
                     MobileServiceUser loginResult =
-                        await App.MobileService.LoginAsync(result.Session.AuthenticationToken);
+                        await App.MobileService.LoginWithMicrosoftAccountAsync(result.Session.AuthenticationToken);
 
                     Debug.WriteLine("Logged in {0} - {1}", meResult.Result["first_name"], loginResult.UserId);
 

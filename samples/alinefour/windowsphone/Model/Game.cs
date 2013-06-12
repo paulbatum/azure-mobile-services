@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace alinefour.Model
 {
-    [DataTable(Name = "games")]
+    [DataTable("games")]
     public class Game
     {
         public Game()
@@ -17,28 +18,28 @@ namespace alinefour.Model
 
         public int Id { get; set; }
 
-        [DataMember(Name = "player1")]
+        [JsonProperty(PropertyName = "player1")]
         public string Player1 { get; set; }
 
-        [DataMember(Name = "player1Nickname")]
+        [JsonProperty(PropertyName = "player1Nickname")]
         public string Player1Nickname { get; set; }
 
-        [DataMember(Name = "player2")]
+        [JsonProperty(PropertyName = "player2")]
         public string Player2 { get; set; }
 
-        [DataMember(Name = "player2Nickname")]
+        [JsonProperty(PropertyName = "player2Nickname")]
         public string Player2Nickname { get; set; }
 
-        [DataMember(Name = "activePlayer")]
+        [JsonProperty(PropertyName = "activePlayer")]
         public int ActivePlayer { get; set; }
 
-        [DataMember(Name = "state")]
+        [JsonProperty(PropertyName = "state")]
         public string State { get; set; }
 
-        [DataMember(Name = "move")]
+        [JsonProperty(PropertyName = "move")]
         public int Move { get; set; }
 
-        [DataMember(Name = "result")]
+        [JsonProperty(PropertyName = "result")]
         public string Result { get; set; }
 
 
