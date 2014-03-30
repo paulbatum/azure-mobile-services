@@ -89,11 +89,11 @@ interface Query {
     skip(recordCount: number): Query;
     take(recordCount: number): Query;
     where(exampleObject: {}): Query;
-    where(predicate: () => bool): Query;
-    where(predicate: (arg1: any) => bool, arg1: any): Query;
-    where(predicate: (arg1: any, arg2: any) => bool, arg1: any, arg2: any): Query;
-    where(predicate: (arg1: any, arg2: any, arg3: any) => bool, arg1: any, arg2: any, arg3: any): Query;
-    where(predicate: (arg1: any, arg2: any, arg3: any, ...args: any[]) => bool, arg1: any, arg2: any, arg3: any, ...args: any[]): Query;
+    where(predicate: () => boolean): Query;
+    where(predicate: (arg1: any) => boolean, arg1: any): Query;
+    where(predicate: (arg1: any, arg2: any) => boolean, arg1: any, arg2: any): Query;
+    where(predicate: (arg1: any, arg2: any, arg3: any) => boolean, arg1: any, arg2: any, arg3: any): Query;
+    where(predicate: (arg1: any, arg2: any, arg3: any, ...args: any[]) => boolean, arg1: any, arg2: any, arg3: any, ...args: any[]): Query;
     read(options: ReadCallbackOptions): void;
 }
 
@@ -276,10 +276,10 @@ interface GcmContent {
     notification_key_name: string;
     collapse_key?: string;
     data?: {};
-    delay_while_idle?: bool;
+    delay_while_idle?: boolean;
     time_to_live?: number;
     restricted_package_name?: string;
-    dry_run?: bool;
+    dry_run?: boolean;
 }
 
 interface MsSql {
@@ -294,12 +294,12 @@ interface MsSqlOpenOptions {
 }
 
 interface MsSqlQueryOptions {
-    success?: (results: {}[], more?: bool) => void;
+    success?: (results: {}[], more?: boolean) => void;
     error?: (err: MobileServiceError) => void;
 }
 
 interface MsSqlQueryRawOptions {
-    success?: (results: MsSqlQueryRawResults, more?: bool) => void;
+    success?: (results: MsSqlQueryRawResults, more?: boolean) => void;
     error?: (err: MobileServiceError) => void;
 }
 
@@ -311,14 +311,14 @@ interface MsSqlQueryRawResults {
 interface MsSqlMetadataResult {
     name: string;
     size: number;
-    nullable: bool;
+    nullable: boolean;
     type: string;
     sqlType: string;
 }
 
 interface MsSqlConnection {
     close(callback: (err: any) => void );
-    close(immediately: bool, callback: (err: any) => void );
+    close(immediately: boolean, callback: (err: any) => void );
 }
 
 interface MsSqlEventEmitter {
